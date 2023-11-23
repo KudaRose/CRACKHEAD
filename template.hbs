@@ -1,0 +1,22 @@
+<table>
+    <thead>
+        <tr>
+            <th>Titulo</th>
+            <th>Disciplina</th>
+            <th>Imagen</th>
+            <th>Tienda</th>
+            <th>URL</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each this}}
+        <tr>
+            <td>{{titulo}}</td>
+            <td>{{disciplina}}</td>
+            <td><img src="{{SRCimg}}" alt="{{marca}} {{modelo}}"></td>
+            <td>{{tienda}}</td>
+            <td><a href="{{URL}}">Enlace</a></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
