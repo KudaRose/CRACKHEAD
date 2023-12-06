@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const mysql = require('mysql2/promise');
+const pg = require('pg');
 
 async function insertar(producto, connection) {
     try {
@@ -9,9 +9,9 @@ async function insertar(producto, connection) {
             producto.url = producto.urlPagina + producto.url
             console.log(producto.url);
         }
-        const [result] = await connection.execute(
-            'INSERT INTO productos (SRCimg, titulo, precio, tienda, disciplina, URL) VALUES (?, ?, ?, ?, ?, ?)',
-            [producto.SRCimgs, producto.titles, producto.prices, producto.tienda, producto.disciplines, producto.url]
+        const [result] = await connection.query(
+            'INSERT INTO "productos" (srcimg, titulo, precio, tienda, url) VALUES ($1, $2, $3, $4, $5)',
+            [producto.SRCimgs, producto.titles, producto.prices, producto.tienda, producto.url]
         );
 
         //console.log(`Producto insertado con ID: ${result.insertId}`);
@@ -21,13 +21,13 @@ async function insertar(producto, connection) {
 }
 
 async function establecerConexion() {
-    console.log("run in the database");
-    return await mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'password',
-        database: 'crackhead'
+    return await new pg.Pool({
+        host: 'sql10.freemysqlhosting.net',
+        user: 'sql10668030',
+        password: 'drZNPzFflk',
+        database: 'sql10668030'
     });
+    
 }
 
 const obtenerProductos = async (browser, storedata) => {
@@ -44,14 +44,12 @@ const obtenerProductos = async (browser, storedata) => {
                 const srcImgElement = prod.querySelector(storedata.SRCimgs);
                 const titleElement = prod.querySelector(storedata.titles);
                 const priceElement = prod.querySelector(storedata.prices);
-                const disciplineElement = prod.querySelector(storedata.disciplines);
                 const urlElement = prod.querySelector(storedata.url);
                 prods.push({
                     SRCimgs: srcImgElement ? srcImgElement.getAttribute('src') : prod,
                     titles: titleElement ? titleElement.innerText : "",
                     prices: priceElement ? priceElement.innerText : "",
                     tienda: storedata.store,
-                    disciplines: disciplineElement ? disciplineElement.innerText : "",
                     url: urlElement ? urlElement.getAttribute('href') : "",
                     urlPagina: storedata.urlCatalogo
                 });
@@ -84,7 +82,6 @@ async function main() {
                 container: ".product-item-info",
                 SRCimgs: ".product-image-photo",
                 titles: ".product-item-name",
-                disciplines: ".product-item-type",
                 prices: ".price",
                 store: "Solo Deportes",
                 urlCatalogo: 'https://www.solodeportes.com.ar/calzado.html',
@@ -94,7 +91,6 @@ async function main() {
                 container: '.product',
                 SRCimgs: '.tile-image',
                 titles: '.link',
-                disciplines: '.product-item-type',
                 prices: '.sales',
                 store: 'Dexter',
                 urlCatalogo: 'https://www.dexter.com.ar/calzado',
@@ -104,7 +100,6 @@ async function main() {
                 container: '.product',
                 SRCimgs: '.tile-image',
                 titles: '.link',
-                disciplines: '.product-item-type',
                 prices: '.sales',
                 store: 'Moov',
                 urlCatalogo: 'https://www.moov.com.ar/zapatillas',
@@ -113,7 +108,6 @@ async function main() {
                 container: '.product-item-info',
                 SRCimgs: '.product-image-photo',
                 titles: '.product-item-link',
-                disciplines: '.product-item-type',
                 prices: '.normal-price',
                 store: 'OpenSports',
                 urlCatalogo: 'https://www.opensports.com.ar/hombre/zapatillas.html',
@@ -122,7 +116,6 @@ async function main() {
                 container: '.product-item-info',
                 SRCimgs: '.product-image-photo',
                 titles: '.product-item-link',
-                disciplines: '.product-item-type',
                 prices: '.normal-price',
                 store: 'OpenSports',
                 urlCatalogo: 'https://www.opensports.com.ar/mujer/zapatillas.html',
@@ -131,7 +124,6 @@ async function main() {
                 container: '.product-tile',
                 SRCimgs: '.tile-image',
                 titles: '.link',
-                disciplines: '.product-item-type',
                 prices: '.value',
                 store: 'Stock Center',
                 urlCatalogo: 'https://www.stockcenter.com.ar/zapatillas',
@@ -139,7 +131,7 @@ async function main() {
             }
         ];
 
-        await connection.execute('delete from productos');
+        await connection.query('delete from productos');
         for (const pagina of paginas) {
             const productos = await obtenerProductos(browser, pagina);
             //console.log(productos);
