@@ -928,7 +928,7 @@ a:focus {
 /* end footer section*/
 /*# sourceMappingURL=style.css.map */
 
-#login-modal {
+#login-modal, #register-modal {
   opacity: 0;
   pointer-events: none;
   position: fixed;
@@ -943,7 +943,7 @@ a:focus {
   align-items: center;
 }
 
-#login-modal .modal-wrapper {
+#login-modal .modal-wrapper, #register-modal .modal-wrapper {
   width: 400px; /* Ajusta el ancho según tus necesidades */
   background: white;
   padding: 20px;
@@ -953,13 +953,15 @@ a:focus {
 }
 
 #login-modal .modal-wrapper input[type="text"],
-#login-modal .modal-wrapper input[type="password"] {
+#login-modal .modal-wrapper input[type="password"],
+#register-modal input {
   width: 80%; /* Ajusta el ancho de los campos de texto */
   padding: 10px;
   margin: 10px 0;
 }
 
-#login-modal .modal-wrapper button {
+#login-modal .modal-wrapper button,
+#register-modal button {
   background-color: #007bff; /* Color de fondo */
   color: white; /* Color del texto */
   padding: 10px 20px;
@@ -968,7 +970,7 @@ a:focus {
   cursor: pointer;
 }
 
-#login-modal.active {
+#login-modal.active, #register-modal.active {
   opacity: 1;
   pointer-events: all;
 }

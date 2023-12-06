@@ -4,7 +4,7 @@ USE crackhead;
 create table usuarios(
 	idUser int not null AUTO_INCREMENT,
 	username varchar(15),
-    pwrd varchar(35),
+    pwrd varchar(200),
     correo varchar(100),
     primary key(idUser)
     );

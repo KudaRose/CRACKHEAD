@@ -16,3 +16,11 @@ function closeWarningModal() {
     const warningModal = document.getElementById('warning-modal');
     warningModal.style.display = 'none';
 }
+
+const openRegisterModal = function() {
+    const registerModal = document.querySelector("#register-modal");
+    registerModal.classList.add('active');
+}
+const registerBtn = document.getElementById("register-btn");
+
+registerBtn.addEventListener('click', openRegisterModal);

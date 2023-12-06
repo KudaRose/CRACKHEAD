@@ -88,21 +88,33 @@
                 </button>
               </form>
             </div>
+           
             <div class="user_option">
               {{#if user}}
                 <p>Bienvenido {{user.username}}!</p>
+                <a href="/logout" class="ml-3 mb-3">Salir</a>
               {{else}}
                 <button
                   type="button"
                   class="btn btn-primary"
                   id="login-btn"
                 >Login</button>
+                <button
+                  type="button"
+                  class="btn btn-secondary ml-3"
+                  id="register-btn"
+                >Registro</button>
               {{/if}}
             </div>
 
           </div>
         </nav>
       </header>
+      {{#if message.text}}
+        <div class="alert alert-{{message.type}}" role="alert">
+          {{message.text}}
+        </div>
+      {{/if}}
       <!-- end header section -->
 
       <!-- end slider section -->
@@ -296,6 +308,26 @@
             placeholder="Password"
           />
           <button type="submit">Login now!</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="register-modal">
+      <div class="modal-wrapper">
+        <form action="/register" method="POST">
+          <input
+            type="text"
+            name="username"
+            class="username-register"
+            placeholder="Username"
+          />
+          <input
+            type="password"
+            name="password"
+            class="username-password"
+            placeholder="Password"
+          />
+          <button type="submit">Register now!</button>
         </form>
       </div>
     </div>

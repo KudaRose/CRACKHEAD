@@ -5,6 +5,7 @@ const mysql = require('mysql2/promise');
 const bcrypt = require('bcrypt');
 const path = require('path');
 const cron = require('node-cron');
+const url = require('node:url');
 
 const app = express();
 const port = 3001;
@@ -30,11 +31,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'mysecret', resave: true, saveUninitialized: true }));
 
-// Ruta para mostrar la ventana modal de login
-app.get('/login', (req, res) => {
-    res.render('login');
-});
-
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
@@ -44,14 +40,27 @@ app.post('/login', async (req, res) => {
         if (rows.length > 0) {
             const match = await bcrypt.compare(password, rows[0].pwrd);
 
-            if (match) {
+            if (match) { 
                 req.session.user = { username };
-                return res.redirect('/');
+                res.redirect(url.format({
+                    pathname:"/",
+                    query: {
+                       "message": "logueado!",
+                       "msg_type": "success"
+                    }
+                }));
+                return;
             }
         }
 
         // Muestra la ventana modal de error en el cliente
-        res.render('productos', { user: req.session.user, showError: true });
+        res.redirect(url.format({
+            pathname:"/",
+            query: {
+               "message": "Credenciales inválidas!",
+               "msg_type": "danger"
+            }
+        }));
     } catch (error) {
         console.error(error);
         res.status(500).send();
@@ -60,7 +69,7 @@ app.post('/login', async (req, res) => {
 
 // Ruta para mostrar la ventana modal de registro
 app.get('/register', (req, res) => {
-    res.render('register');
+    res.redirect('/');
 });
 
 // Ruta para procesar el formulario de registro
@@ -70,23 +79,41 @@ app.post('/register', async (req, res) => {
         const salt = await bcrypt.genSalt();
         const hashpw = await bcrypt.hash(password, salt);
 
-        const user = { name: username, password: hashpw, mail: mail };
+        const user = { name: username, password: hashpw };
 
         await pool.execute(
-            'INSERT INTO Usuarios (username, pwrd, correo) VALUES (?, ?, ?)',
-            [user.name, user.password, user.mail]
+            'INSERT INTO usuarios (username, pwrd) VALUES (?, ?)',
+            [user.name, user.password]
         );
 
-        res.redirect('/login');
+        res.redirect(url.format({
+            pathname:"/",
+            query: {
+               "message": "Registro correcto, inicie sesión",
+               "msg_type": "success"
+            }
+        }));
     } catch (error) {
         console.error(error);
-        res.status(500).send();
+        res.redirect(url.format({
+            pathname:"/",
+            query: {
+               "message": "Registro incorrecto, intente nuevamente",
+               "msg_type": "danger"
+            }
+        }));
     }
 });
 
 app.get('/logout', (req, res) => {
     req.session.destroy();
-    res.redirect('/');
+    res.redirect(url.format({
+        pathname:"/",
+        query: {
+           "message": "Cerraste sesión",
+           "msg_type": "info"
+        }
+    }));
 });
 
 // Ruta para la búsqueda
@@ -109,9 +136,15 @@ app.get('/', async (req, res) => {
     try {
         // Consulta los productos desde la base de datos
         const [rows, fields] = await pool.execute('SELECT * FROM productos');
-
+        let message = null;
+        if (req.query.message && req.query.msg_type) {
+            message = {
+                text: req.query.message,
+                type: req.query.msg_type
+            }
+        }
         // Pasa el estado de autenticación y el mensaje de error al contexto de Handlebars
-        res.render('productos', { user: req.session.user, productos: rows, showError: req.query.error });
+        res.render('productos', { user: req.session.user, productos: rows, message});
     } catch (error) {
         console.error(error);
         res.status(500).send();
