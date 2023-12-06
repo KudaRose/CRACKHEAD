@@ -119,7 +119,7 @@ app.get('/search', async (req, res) => {
 
     try {
         // Realiza una consulta a la base de datos con el valor de búsqueda
-        const rows = await pool.query('SELECT * FROM productos WHERE titulo LIKE ?', [`%${searchQuery}%`]);
+        const rows = await pool.query('SELECT * FROM productos WHERE titulo LIKE $1', [`%${searchQuery}%`]);
 
         // Pasa el resultado de la búsqueda al contexto de Handlebars y renderiza la vista
         res.render('productos', { user: req.session.user, productos: rows.rows, showError: req.query.error });
