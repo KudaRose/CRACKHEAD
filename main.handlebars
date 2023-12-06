@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <title>Productos</title>
+</head>
+
+<body>
+    <div class="product-container">
+        {{#each productos}}
+        <div class="product">
+            <h3>{{marca}} {{modelo}}</h3>
+            <p>Color: {{color}}</p>
+            <img src="{{SRCimg}}" alt="{{marca}} {{modelo}}">
+            <p>Tienda: {{tienda}}</p>
+            <a href="{{URL}}">Enlace</a>
+        </div>
+        {{/each}}
+    </div>
+
+    <!-- Agrega el botón "Acceder" y la ventana emergente -->
+    <button id="openModalBtn">Login</button>
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <!-- Formularios de inicio de sesión y registro -->
+            <form method="POST" action="/login">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <form method="POST" action="/register">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Agrega el script de JavaScript -->
+    <!-- Agrega el script de JavaScript al final del cuerpo del documento -->
+    <script>
+        // Función para mostrar la ventana modal
+        function openModal() {
+            const loginModal = document.getElementById('loginModal');
+            loginModal.style.display = 'block';
+        }
+
+        // Función para ocultar la ventana modal
+        function closeModal() {
+            const loginModal = document.getElementById('loginModal');
+            loginModal.style.display = 'none';
+        }
+
+        // Función para realizar el inicio de sesión mediante AJAX
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Realiza la solicitud de inicio de sesión mediante AJAX
+            // (puedes usar fetch o cualquier otra biblioteca para hacer solicitudes AJAX)
+            // Aquí deberías enviar la solicitud POST al servidor para manejar el inicio de sesión
+
+            // Después de procesar el inicio de sesión, puedes cerrar la ventana modal si es exitoso
+            // closeModal();
+        }
+
+        // Agrega el evento click al botón de "Login" para mostrar la ventana modal
+        document.addEventListener('DOMContentLoaded', function () {
+            const loginBtn = document.getElementById('openLoginModalBtn');
+            loginBtn.addEventListener('click', openModal);
+        });
+    </script>
+
+</body>
+
+</html>

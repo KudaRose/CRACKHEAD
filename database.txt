@@ -4,8 +4,8 @@ USE crackhead;
 create table Usuarios(
 	idUser int not null AUTO_INCREMENT,
 	username varchar(15),
-    pwrd varchar(15),
-    correo varchar(45),
+    pwrd varchar(35),
+    correo varchar(100),
     primary key(idUser)
     );
     
@@ -13,8 +13,9 @@ create table Productos(
 	idProducto int not null AUTO_INCREMENT,
     SRCimg varchar(2050),
     titulo varchar(100),
-    categoria varchar(45),
-    tienda varchar(45),
+    precio varchar(150),
+    tienda varchar(50),
+    disciplina varchar(20),
     URL varchar(2050),
     primary key(idProducto)
     );
