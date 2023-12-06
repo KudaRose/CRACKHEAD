@@ -6,7 +6,7 @@ create table Usuarios(
     primary key(idUser)
     );
     
-create table Productos(
+create table productos(
 	idProducto int not null,
     marca varchar(45),
     modelo varchar(45),

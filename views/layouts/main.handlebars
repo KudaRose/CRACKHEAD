@@ -1,0 +1,315 @@
+<html>
+
+  <head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="/images/logo.jpg" type="image/x-icon" />
+
+    <title>
+      Crackhead
+    </title>
+
+    <!-- slider stylesheet -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+    />
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="bootstrap.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="responsive.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- Agrega esto en tu HTML, dentro del body -->
+    <div id="warning-modal" class="warning-modal" style="display: none;">
+      <div class="warning-content">
+        <span class="close-btn" onclick="closeWarningModal()">&times;</span>
+        <p id="warning-message"></p>
+      </div>
+    </div>
+
+    <div class="hero_area">
+      <!-- header section strats -->
+      <header class="header_section">
+        <img class="pruebaIMG" src="./images/logo.jpg" alt="Logo" />
+        <a class="navbar-brand" href="/">
+          <span>Crackhead</span>
+        </a>
+        <nav class="navbar navbar-expand-lg custom_nav-container">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class=""></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="input-field d-flex align-items-center">
+              <form action="/search" method="GET" class="form-inline">
+                <input
+                  id="search"
+                  type="text"
+                  placeholder="Buscar Producto"
+                  name="query"
+                  class="form-control"
+                />
+                <button class="btn btn-search ml-2" type="submit">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                    ></path>
+                  </svg>
+                </button>
+              </form>
+            </div>
+            <div class="user_option">
+              {{#if user}}
+                <p>Bienvenido {{user.username}}!</p>
+              {{else}}
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  id="login-btn"
+                >Login</button>
+              {{/if}}
+            </div>
+
+          </div>
+        </nav>
+      </header>
+      <!-- end header section -->
+
+      <!-- end slider section -->
+    </div>
+    <!-- end hero area -->
+
+    <!-- shop section -->
+
+    <section class="shop_section layout_padding">
+      <div class="container-fluid">
+        <div class="heading_container heading_center">
+          <h2>
+            Productos
+          </h2>
+        </div>
+        <div class="row">
+
+          {{#each productos}}
+            <div class="col-sm-6 col-md-4 col-lg-3 product">
+              <div class="box">
+                <a href="{{URL}}">
+                  <div class="img-box">
+                    <img src="{{SRCimg}}" alt="{{marca}} {{modelo}}" />
+                  </div>
+                  <div class="detail-box">
+                    <h6>
+                      {{titulo}}
+                    </h6>
+                    <h6>
+                      <span>
+                        {{precio}}
+                      </span>
+                    </h6>
+                  </div>
+                  <div class="local">
+                    <span>
+                      {{tienda}}
+                    </span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    </section>
+
+    <!-- end shop section -->
+
+    <!-- saving section -->
+
+    <section class="saving_section">
+      <div class="box">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="img-box">
+                <img src="images/Jordan.jpg" alt="" />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="detail-box">
+                <div class="heading_container">
+                  <h2>
+                    Nuevo Lanzamiento
+                    <br />
+                    de Jordan
+                  </h2>
+                </div>
+                <p>
+                  Air Jordan gen38: así son las nuevas zapatillas de la marca
+                  que aspiran a ser las mejores de la historia, son el último
+                  lanzamiento de la saga de zapatillas de baloncesto más famosa
+                  del mundo.
+                </p>
+                <div class="btn-box">
+                  <a href="https://www.nike.com.ar/nike/jordan" class="btn2">
+                    Ver más
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- end saving section -->
+
+    <!-- info section -->
+
+    <section class="info_section layout_padding2-top">
+      <div class="social_container">
+        <div class="social_box">
+          <a href="">
+            <i class="fa fa-facebook" aria-hidden="true"></i>
+          </a>
+          <a href="">
+            <i class="fa fa-twitter" aria-hidden="true"></i>
+          </a>
+          <a href="">
+            <i class="fa fa-instagram" aria-hidden="true"></i>
+          </a>
+          <a href="">
+            <i class="fa fa-youtube" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+      <div class="info_container">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 col-lg-3">
+              <h6>
+                Acerca de
+              </h6>
+              <p>
+                Crackhead es una pagina que se dedica a recopilar la mayoria de productos de las principales paginas/tiendas de calzado de Argentina, para que los usuarios puedan
+                acceder a los mismos dentro de un mismo sitio y poder realizar busquedas de manera mas comoda.
+              </p>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="info_form">
+                <h5>
+                  Suscribirse al Newsletter
+                </h5>
+                <form action="#">
+                  <input type="email" placeholder="Su email" />
+                  <button>
+                    Suscribirse
+                  </button>
+                </form>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <h6>
+                Contacto
+              </h6>
+              <p>
+                Creen que hubo algun error? Sientase libre de comunicarse si quiere informar o comunicarse con un responsable al sitio.
+              </p>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <h6>
+                Contacto
+              </h6>
+              <div class="info_link-box">
+                <a href="">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  <span> CABA, Argentina </span>
+                </a>
+                <a href="">
+                  <i class="fa fa-phone" aria-hidden="true"></i>
+                  <span>+54 11 0011-2233</span>
+                </a>
+                <a href="">
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                  <span> correofalso123@gmail.com</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- footer section -->
+      <footer class="footer_section">
+        <div class="container">
+          <p>
+            &copy;
+            <span id="displayYear"></span>
+            All Rights Reserved
+            <a href="https://html.design/"></a>
+          </p>
+        </div>
+      </footer>
+      <!-- footer section -->
+
+    </section>
+
+    <div id="login-modal">
+      <div class="modal-wrapper">
+        <form action="/login" method="POST">
+          <input
+            type="text"
+            name="username"
+            class="username-login"
+            placeholder="Username"
+          />
+          <input
+            type="password"
+            name="password"
+            class="username-password"
+            placeholder="Password"
+          />
+          <button type="submit">Login now!</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- end info section -->
+    <!-- Agrega esto en la sección head de tu HTML -->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+    >
+    </script>
+    <script src="js/custom.js"></script>
+
+  </body>
+
+</html>

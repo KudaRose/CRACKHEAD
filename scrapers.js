@@ -10,7 +10,7 @@ async function insertar(producto, connection) {
             console.log(producto.url);
         }
         const [result] = await connection.execute(
-            'INSERT INTO Productos (SRCimg, titulo, precio, tienda, disciplina, URL) VALUES (?, ?, ?, ?, ?, ?)',
+            'INSERT INTO productos (SRCimg, titulo, precio, tienda, disciplina, URL) VALUES (?, ?, ?, ?, ?, ?)',
             [producto.SRCimgs, producto.titles, producto.prices, producto.tienda, producto.disciplines, producto.url]
         );
 

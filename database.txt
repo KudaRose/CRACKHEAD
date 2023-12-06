@@ -1,7 +1,7 @@
 CREATE DATABASE crackhead;
 USE crackhead;
 
-create table Usuarios(
+create table usuarios(
 	idUser int not null AUTO_INCREMENT,
 	username varchar(15),
     pwrd varchar(35),
@@ -9,7 +9,7 @@ create table Usuarios(
     primary key(idUser)
     );
     
-create table Productos(
+create table productos(
 	idProducto int not null AUTO_INCREMENT,
     SRCimg varchar(2050),
     titulo varchar(100),
@@ -20,10 +20,10 @@ create table Productos(
     primary key(idProducto)
     );
 
-create table Fav_x_usr(
+create table fav_x_usr(
 	idFav int not null,
     iduser int not null,
     idproduct int not null,
-    foreign key (iduser) references Usuarios(idUser),
-    foreign key (idproduct) references Productos(idProducto)
+    foreign key (iduser) references usuarios(idUser),
+    foreign key (idproduct) references productos(idProducto)
     );
